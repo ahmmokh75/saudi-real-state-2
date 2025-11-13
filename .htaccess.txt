@@ -1,0 +1,23 @@
+# تمكين التخزين المؤقت
+<IfModule mod_expires.c>
+  ExpiresActive on
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/jpeg "access plus 1 month"
+</IfModule>
+
+# إعادة التوجيه إلى HTTPS (اختياري)
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# أنواع MIME لملفات PWA
+AddType application/manifest+json .webmanifest
+
+# Service Worker يجب أن يخدم من نفس المصدر
+<Files "sw.js">
+  Header Set Service-Worker-Allowed "/"
+</Files>

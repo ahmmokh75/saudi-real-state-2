@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e3c72">
+    <meta name="description" content="إدارة مشاريع العقارات في المملكة العربية السعودية">
+    <title>مشاريع منزل - إدارة العقارات السعودية</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        /* إضافة جميع الأنماط السابقة هنا مع تحسينات */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00a86b, #ff9900, #ff6b6b);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .project-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        /* إضافة الأنماط الأخرى من الكود السابق */
+        
+        /* تحسينات جديدة */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #00a86b;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #2a5298;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 999;
+        }
+        
+        .sync-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 1001;
+            display: none;
+        }
+        
+        .install-prompt {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            max-width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .install-prompt button {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        /* تحسينات للهواتف */
+        @media (max-width: 768px) {
+            .install-prompt {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- مؤشر عدم الاتصال -->
+    <div class="offline-indicator" id="offlineIndicator">
+        ⚠️ أنت غير متصل بالإنترنت. يتم العمل في الوضع المحلي.
+    </div>
+    
+    <!-- إشعارات -->
+    <div class="notification" id="notification"></div>
+    
+    <!-- مؤشر المزامنة -->
+    <div class="sync-indicator" id="syncIndicator" style="display: none;">
+        <div class="sync-spinner"></div>
+        <span>جاري تحديث البيانات...</span>
+    </div>
+    
+    <!-- نافذة تثبيت التطبيق -->
+    <div class="install-prompt" id="installPrompt">
+        <h3>تثبيت تطبيق مشاريع منزل</h3>
+        <p>قم بتثبيت التطبيق للوصول السريع وتجربة أفضل.</p>
+        <button id="installButton">تثبيت التطبيق</button>
+        <button id="dismissInstall" style="background: #f0f0f0; color: #333; margin-top: 5px;">لاحقًا</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>مشاريع منزل</h1>
+            <p class="project-info">إدارة جميع مشاريعك العقارية في مدن السعودية</p>
+        </header>
+        
+        <!-- مسار التنقل -->
+        <div class="breadcrumb" id="breadcrumb">
+            <div class="breadcrumb-item breadcrumb-current">المدن</div>
+        </div>
+        
+        <!-- صفحة المدن -->
+        <div id="citiesPage">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCities">3</div>
+                    <div class="stat-label">مدينة</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalProjects">19</div>
+                    <div class="stat-label">إجمالي المشاريع</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalApartments">169</div>
+                    <div class="stat-label">إجمالي الشقق</div>
+                </div>
+            </div>
+            
+            <h2 style="text-align: center; margin-bottom: 30px; color: #2a5298;">مدن السعودية</h2>
+            <div class="cities-grid" id="citiesContainer">
+                <!-- سيتم إضافة المدن هنا عبر JavaScript -->
+            </div>
+        </div>
+        
+        <!-- صفحة مجموعات المشاريع -->
+        <div id="projectGroupsPage" class="hidden">
+            <button class="back-btn" id="backToCities">
+                ← العودة إلى المدن
+            </button>
+            
+            <header>
+                <h1 id="cityTitle">مشاريع الرياض</h1>
+                <p class="project-info" id="cityDetails">إدارة المشاريع العقارية في مدينة الرياض</p>
+            </header>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="groupSearch" placeholder="البحث في مجموعات المشاريع...">
+                <select class="filter-select" id="groupFilter">
+                    <option value="all">جميع المجموعات</option>
+                    <option value="sly">SLY</option>
+                    <option value="umh">UMH</option>
+                    <option value="jed">JED</option>
+                    <option value="dmm">DMM</option>
+                </select>
+            </div>
+            
+            <div class="project-groups-grid" id="projectGroupsContainer">
+                <!-- سيتم إضافة مجموعات المشاريع هنا عبر JavaScript -->
+            </div>
+        </div>
+        
+        <!-- صفحة المشاريع -->
+        <div id="projectsPage" class="hidden">
+            <button class="back-btn" id="backToProjectGroups">
+                ← العودة إلى مجموعات المشاريع
+            </button>
+            
+            <header>
+                <h1 id="groupTitle">مشاريع SLY</h1>
+                <p class="project-info" id="groupDetails">المشاريع العقارية SLY في الرياض</p>
+            </header>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="projectSearch" placeholder="البحث في المشاريع...">
+                <select class="filter-select" id="projectFilter">
+                    <option value="all">جميع المشاريع</option>
+                    <option value="sly">SLY</option>
+                    <option value="umh">UMH</option>
+                    <option value="jed">JED</option>
+                    <option value="dmm">DMM</option>
+                </select>
+            </div>
+            
+            <div class="projects-grid" id="projectsContainer">
+                <!-- سيتم إضافة المشاريع هنا عبر JavaScript -->
+            </div>
+        </div>
+        
+        <!-- صفحة الشقق -->
+        <div id="apartmentsPage" class="hidden">
+            <button class="back-btn" id="backToProjects">
+                ← العودة إلى المشاريع
+            </button>
+            
+            <header>
+                <h1 id="projectTitle">المشروع SLY-1001</h1>
+                <p class="project-info" id="projectDetails">إجمالي الشقق: 10 - الطابق الأرضي فقط</p>
+            </header>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="apartmentSearch" placeholder="البحث في الشقق...">
+                <select class="filter-select" id="apartmentFilter">
+                    <option value="all">جميع الحالات</option>
+                    <option value="available">متاحة</option>
+                    <option value="occupied">مشغولة</option>
+                    <option value="reserved">محجوزة</option>
+                </select>
+            </div>
+            
+            <div class="floor-section">
+                <h2 class="floor-title">الطابق الأرضي - 10 شقق</h2>
+                <div class="apartments-grid" id="apartmentsContainer">
+                    <!-- سيتم إضافة الشقق هنا عبر JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- تفاصيل الشقة -->
+        <div class="apartment-details" id="apartmentDetails">
+            <div class="details-header">
+                <h2 class="details-title" id="detailsTitle">تفاصيل الشقة</h2>
+                <button class="close-btn" id="closeDetails">×</button>
+            </div>
+            <div class="details-content" id="detailsContent">
+                <!-- سيتم إضافة التفاصيل هنا عبر JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // بيانات التطبيق
+        let appData = {
+            cities: [],
+            projectGroups: {},
+            projects: {},
+            apartments: {},
+            lastUpdate: null
+        };
+
+        // تهيئة التطبيق
+        async function initializeApp() {
+            // محاولة تحميل البيانات من التخزين المحلي
+            const savedData = localStorage.getItem('manzilProjectsData');
+            const savedTimestamp = localStorage.getItem('manzilProjectsTimestamp');
+            
+            if (savedData && savedTimestamp) {
+                try {
+                    appData = JSON.parse(savedData);
+                    appData.lastUpdate = new Date(savedTimestamp);
+                    showNotification('تم تحميل البيانات المحلية', 'success');
+                } catch (e) {
+                    console.error('خطأ في تحميل البيانات المحلية:', e);
+                    loadDefaultData();
+                }
+            } else {
+                loadDefaultData();
+            }
+            
+            // محاولة تحديث البيانات من الخادم
+            checkForUpdates();
+            
+            // تهيئة واجهة المستخدم
+            initializeUI();
+            
+            // تسجيل Service Worker للتحديث التلقائي
+            registerServiceWorker();
+            
+            // إعداد مستمعي الأحداث للاتصال بالإنترنت
+            setupConnectionListeners();
+            
+            // إعداد نافذة تثبيت التطبيق
+            setupInstallPrompt();
+        }
+
+        // تحميل البيانات الافتراضية
+        function loadDefaultData() {
+            appData.cities = [
+                {
+                    id: 1,
+                    name: "الرياض",
+                    totalProjects: 9,
+                    color: "riyadh",
+                    description: "العاصمة وأكبر مدينة في المملكة العربية السعودية"
+                },
+                {
+                    id: 2,
+                    name: "جدة", 
+                    totalProjects: 6,
+                    color: "jeddah",
+                    description: "مركز حضري رئيسي وميناء على البحر الأحمر"
+                },
+                {
+                    id: 3,
+                    name: "الدمام",
+                    totalProjects: 4,
+                    color: "dammam",
+                    description: "عاصمة المنطقة الشرقية ومدينة ميناء مهمة"
+                }
+            ];
+
+            appData.projectGroups = {
+                riyadh: [
+                    {
+                        id: 1,
+                        name: "SLY",
+                        description: "مجموعة SLY",
+                        totalProjects: 4,
+                        type: "sly"
+                    },
+                    {
+                        id: 2,
+                        name: "UMH", 
+                        description: "مجموعة UMH",
+                        totalProjects: 5,
+                        type: "umh"
+                    }
+                ],
+                jeddah: [
+                    {
+                        id: 1,
+                        name: "JED",
+                        description: "مشاريع جدة",
+                        totalProjects: 3,
+                        type: "jed"
+                    }
+                ],
+                dammam: [
+                    {
+                        id: 1,
+                        name: "DMM",
+                        description: "مشاريع الدمام",
+                        totalProjects: 3,
+                        type: "dmm"
+                    }
+                ]
+            };
+
+            appData.projects = {
+                sly: [
+                    {
+                        id: 1,
+                        name: "SLY-1001",
+                        location: "الرياض - حي السلي",
+                        totalApartments: 10,
+                        totalBathrooms: 18
+                    },
+                    {
+                        id: 2,
+                        name: "SLY-1002", 
+                        location: "الرياض - حي السلي",
+                        totalApartments: 24,
+                        totalBathrooms: 48
+                    },
+                    {
+                        id: 3,
+                        name: "SLY-1003",
+                        location: "الرياض - حي السلي", 
+                        totalApartments: 8,
+                        totalBathrooms: 16
+                    },
+                    {
+                        id: 4,
+                        name: "SLY-1004",
+                        location: "الرياض - حي السلي", 
+                        totalApartments: 16,
+                        totalBathrooms: 32
+                    }
+                ],
+                umh: [
+                    {
+                        id: 1,
+                        name: "UMH-1001",
+                        location: "الرياض - حي أم الحمام",
+                        totalApartments: 12,
+                        totalBathrooms: 24
+                    },
+                    {
+                        id: 2,
+                        name: "UMH-1002", 
+                        location: "الرياض - حي أم الحمام",
+                        totalApartments: 18,
+                        totalBathrooms: 36
+                    },
+                    {
+                        id: 3,
+                        name: "UMH-1003",
+                        location: "الرياض - حي أم الحمام", 
+                        totalApartments: 14,
+                        totalBathrooms: 28
+                    },
+                    {
+                        id: 4,
+                        name: "UMH-1004",
+                        location: "الرياض - حي أم الحمام", 
+                        totalApartments: 20,
+                        totalBathrooms: 40
+                    },
+                    {
+                        id: 5,
+                        name: "UMH-1005",
+                        location: "الرياض - حي أم الحمام", 
+                        totalApartments: 16,
+                        totalBathrooms: 32
+                    }
+                ]
+            };
+
+            appData.apartments = {
+                'SLY-1001': [
+                    // الشقة 1: غرفتان بدون حمام - كل غرفة تحتوي على 3 أسرّة مزدوجة
+                    { 
+                        id: 1, 
+                        number: "SLY-1001-01", 
+                        rooms: 2, 
+                        bathrooms: 0, 
+                        beds: 6, // 2 غرفة × 3 أسرّة = 6 أسرّة
+                        bedsPerRoom: 3,
+                        bedType: "مزدوج",
+                        area: 80, 
+                        floor: "الطابق الأرضي", 
+                        status: "available", 
+                        price: 1000000, 
+                        balcony: false,
+                        features: ["تكييف", "غير مفروشة", "موقف سيارات"]
+                    },
+                    
+                    // الشقق الأخرى (2-10): 4 غرف وحمامان - كل غرفة تحتوي على 3 أسرّة مزدوجة
+                    { 
+                        id: 2, 
+                        number: "SLY-1001-02", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12, // 4 غرفة × 3 أسرّة = 12 سرير
+                        bedsPerRoom: 3,
+                        bedType: "مزدوج",
+                        area: 140, 
+                        floor: "الطابق الأرضي", 
+                        status: "available", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["تكييف", "مفروشة", "موقف سيارات", "شرفة"]
+                    },
+                    // ... بقية الشقق
+                ]
+            };
+            
+            appData.lastUpdate = new Date();
+            saveDataToLocalStorage();
+        }
+
+        // حفظ البيانات في التخزين المحلي
+        function saveDataToLocalStorage() {
+            localStorage.setItem('manzilProjectsData', JSON.stringify(appData));
+            localStorage.setItem('manzilProjectsTimestamp', appData.lastUpdate.toISOString());
+        }
+
+        // التحقق من وجود تحديثات
+        async function checkForUpdates() {
+            if (!navigator.onLine) return;
+            
+            try {
+                document.getElementById('syncIndicator').style.display = 'flex';
+                
+                // محاكاة طلب إلى الخادم (يمكن استبدالها برابط حقيقي)
+                const response = await fetch('/api/check-updates', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        lastUpdate: appData.lastUpdate
+                    })
+                }).catch(() => null); // تجاهل الأخطاء في حالة عدم وجود خادم
+                
+                if (response && response.ok) {
+                    const updateData = await response.json();
+                    if (updateData.hasUpdate) {
+                        // تطبيق التحديثات
+                        applyUpdates(updateData.data);
+                        showNotification('تم تحديث البيانات بنجاح', 'success');
+                    } else {
+                        showNotification('البيانات محدثة بالفعل', 'info');
+                    }
+                }
+            } catch (error) {
+                console.error('خطأ في التحقق من التحديثات:', error);
+            } finally {
+                document.getElementById('syncIndicator').style.display = 'none';
+            }
+        }
+
+        // تطبيق التحديثات
+        function applyUpdates(updatedData) {
+            // دمج البيانات الجديدة مع البيانات الحالية
+            Object.keys(updatedData).forEach(key => {
+                if (appData[key]) {
+                    if (Array.isArray(appData[key])) {
+                        appData[key] = [...appData[key], ...updatedData[key]];
+                    } else if (typeof appData[key] === 'object') {
+                        appData[key] = { ...appData[key], ...updatedData[key] };
+                    } else {
+                        appData[key] = updatedData[key];
+                    }
+                }
+            });
+            
+            appData.lastUpdate = new Date();
+            saveDataToLocalStorage();
+            
+            // إعادة تحميل الواجهة إذا لزم الأمر
+            if (window.currentView && window.currentView.refresh) {
+                window.currentView.refresh();
+            }
+        }
+
+        // تسجيل Service Worker
+        async function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js');
+                    console.log('Service Worker مسجل بنجاح:', registration);
+                    
+                    // الاستماع للتحديثات
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                showNotification('يتوفر تحديث جديد. أعد تحميل الصفحة.', 'info');
+                            }
+                        });
+                    });
+                } catch (error) {
+                    console.error('فشل تسجيل Service Worker:', error);
+                }
+            }
+        }
+
+        // إعداد مستمعي الاتصال بالإنترنت
+        function setupConnectionListeners() {
+            window.addEventListener('online', () => {
+                document.getElementById('offlineIndicator').style.display = 'none';
+                showNotification('تم استعادة الاتصال بالإنترنت', 'success');
+                checkForUpdates();
+            });
+            
+            window.addEventListener('offline', () => {
+                document.getElementById('offlineIndicator').style.display = 'block';
+                showNotification('فقدت الاتصال بالإنترنت', 'warning');
+            });
+            
+            // التحقق من حالة الاتصال الأولية
+            if (!navigator.onLine) {
+                document.getElementById('offlineIndicator').style.display = 'block';
+            }
+        }
+
+        // إعداد نافذة تثبيت التطبيق
+        function setupInstallPrompt() {
+            let deferredPrompt;
+            const installPrompt = document.getElementById('installPrompt');
+            const installButton = document.getElementById('installButton');
+            const dismissButton = document.getElementById('dismissInstall');
+            
+            window.addEventListener('beforeinstallprompt', (e) => {
+                e.preventDefault();
+                deferredPrompt = e;
+                installPrompt.style.display = 'block';
+            });
+            
+            installButton.addEventListener('click', async () => {
+                if (!deferredPrompt) return;
+                
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    installPrompt.style.display = 'none';
+                    deferredPrompt = null;
+                }
+            });
+            
+            dismissButton.addEventListener('click', () => {
+                installPrompt.style.display = 'none';
+            });
+        }
+
+        // عرض الإشعارات
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            // تلوين الإشعار حسب النوع
+            if (type === 'success') {
+                notification.style.background = '#00a86b';
+            } else if (type === 'warning') {
+                notification.style.background = '#ff9900';
+            } else if (type === 'error') {
+                notification.style.background = '#ff6b6b';
+            } else {
+                notification.style.background = '#2a5298';
+            }
+            
+            // إخفاء الإشعار بعد 3 ثوانٍ
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // تهيئة واجهة المستخدم (استخدام الكود السابق مع تعديلات طفيفة)
+        function initializeUI() {
+            // إضافة جميع دوال واجهة المستخدم من الكود السابق هنا
+            // مع تعديلها لاستخدام appData بدلاً من المتغيرات العالمية
+            
+            // مثال:
+            initializeStats();
+            renderCities();
+            
+            // إعداد مستمعي الأحداث للتنقل
+            document.getElementById('backToCities').addEventListener('click', showCitiesPage);
+            document.getElementById('backToProjectGroups').addEventListener('click', () => {
+                if (window.currentCity) {
+                    showCityProjectGroups(window.currentCity);
+                }
+            });
+            document.getElementById('backToProjects').addEventListener('click', () => {
+                if (window.currentCity && window.currentGroup) {
+                    showGroupProjects(window.currentGroup, window.currentCity.name);
+                }
+            });
+            document.getElementById('closeDetails').addEventListener('click', () => {
+                document.getElementById('apartmentDetails').style.display = 'none';
+            });
+        }
+
+        // تهيئة الإحصائيات
+        function initializeStats() {
+            document.getElementById('totalCities').textContent = appData.cities.length;
+            
+            let totalProjectsCount = 0;
+            let totalApartmentsCount = 0;
+            
+            // حساب إجمالي المشاريع
+            for (const city in appData.projectGroups) {
+                appData.projectGroups[city].forEach(group => {
+                    totalProjectsCount += group.totalProjects;
+                });
+            }
+            
+            // حساب إجمالي الشقق (تقريبي)
+            for (const group in appData.projects) {
+                appData.projects[group].forEach(project => {
+                    totalApartmentsCount += project.totalApartments;
+                });
+            }
+            
+            document.getElementById('totalProjects').textContent = totalProjectsCount;
+            document.getElementById('totalApartments').textContent = totalApartmentsCount;
+        }
+
+        // عرض المدن
+        function renderCities() {
+            const citiesContainer = document.getElementById('citiesContainer');
+            citiesContainer.innerHTML = '';
+            
+            appData.cities.forEach(city => {
+                const card = document.createElement('div');
+                card.className = `city-card ${city.color}-card`;
+                card.dataset.id = city.id;
+                
+                card.innerHTML = `
+                    <div class="city-name">${city.name}</div>
+                    <div class="projects-count">${city.totalProjects} مشاريع</div>
+                `;
+                
+                card.addEventListener('click', () => showCityProjectGroups(city));
+                citiesContainer.appendChild(card);
+            });
+        }
+
+        // عرض مجموعات مشاريع المدينة
+        function showCityProjectGroups(city) {
+            window.currentCity = city;
+            window.currentGroup = null;
+            window.currentProject = null;
+            
+            // تحديث عنوان الصفحة وتفاصيل المدينة
+            document.getElementById('cityTitle').textContent = `مشاريع ${city.name}`;
+            document.getElementById('cityDetails').textContent = `إدارة المشاريع العقارية في مدينة ${city.name}`;
+            
+            // إظهار صفحة مجموعات المشاريع وإخفاء صفحة المدن
+            document.getElementById('citiesPage').classList.add('hidden');
+            document.getElementById('projectGroupsPage').classList.remove('hidden');
+            document.getElementById('projectsPage').classList.add('hidden');
+            document.getElementById('apartmentsPage').classList.add('hidden');
+            document.getElementById('apartmentDetails').style.display = 'none';
+            
+            // مسح مجموعات المشاريع السابقة
+            const projectGroupsContainer = document.getElementById('projectGroupsContainer');
+            projectGroupsContainer.innerHTML = '';
+            
+            // إضافة مجموعات مشاريع المدينة
+            const cityProjectGroups = appData.projectGroups[city.color];
+            
+            if (cityProjectGroups && cityProjectGroups.length > 0) {
+                cityProjectGroups.forEach(group => {
+                    createProjectGroupCard(group, city.name);
+                });
+            } else {
+                projectGroupsContainer.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                        <div style="font-size: 1.5rem; color: #666; margin-bottom: 10px;">
+                            🏗️ لا توجد مجموعات مشاريع متاحة
+                        </div>
+                        <div style="color: #999;">
+                            سيتم إضافة مجموعات المشاريع قريبًا لـ ${city.name}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            updateBreadcrumb(city);
+        }
+
+        // إنشاء بطاقة مجموعة المشاريع
+        function createProjectGroupCard(group, cityName) {
+            const card = document.createElement('div');
+            card.className = `project-group-card ${group.type}-group`;
+            card.dataset.id = group.id;
+            
+            card.innerHTML = `
+                <div class="group-name">${group.name}</div>
+                <div class="group-info">${group.description}</div>
+                <div class="projects-count">${group.totalProjects} مشاريع</div>
+            `;
+            
+            card.addEventListener('click', () => showGroupProjects(group, cityName));
+            document.getElementById('projectGroupsContainer').appendChild(card);
+        }
+
+        // ... استمرار باقي دوال واجهة المستخدم من الكود السابق
+
+        // بدء التطبيق
+        document.addEventListener('DOMContentLoaded', initializeApp);
+        
+        // تحديث البيانات كل 5 دقائق عند الاتصال بالإنترنت
+        setInterval(() => {
+            if (navigator.onLine) {
+                checkForUpdates();
+            }
+        }, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
+// التحقق من التحديثات كل ساعة
+setInterval(() => {
+  if (navigator.onLine) {
+    checkForUpdates();
+  }
+}, 60 * 60 * 1000); // كل ساعة
+
+// أيضًا تحقق عند فتح الصفحة
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (navigator.onLine) {
+      checkForUpdates();
+    }
+  }, 3000);
+});
