@@ -382,6 +382,72 @@
             border-radius: 20px;
             font-weight: bold;
         }
+
+        /* تفاصيل الشقة */
+        .apartment-details {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .details-title {
+            font-size: 1.8rem;
+            color: #2a5298;
+        }
+        
+        .close-btn {
+            background: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .details-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .detail-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-value {
+            font-size: 1.1rem;
+            color: #333;
+        }
         
         /* تحسينات للجوال */
         @media (max-width: 768px) {
@@ -404,6 +470,14 @@
             .project-group-card,
             .project-card {
                 padding: 20px 15px;
+            }
+            
+            .details-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .apartment-details {
+                padding: 20px;
             }
         }
     </style>
@@ -488,6 +562,17 @@
             
             <div class="cities-grid" id="apartmentsContainer">
                 <!-- Apartments will be added here by JavaScript -->
+            </div>
+
+            <!-- Apartment Details Section -->
+            <div class="apartment-details" id="apartmentDetails">
+                <div class="details-header">
+                    <h2 class="details-title" id="detailsTitle">Apartment Details</h2>
+                    <button class="close-btn" id="closeDetails">×</button>
+                </div>
+                <div class="details-content" id="detailsContent">
+                    <!-- Details will be added here by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
@@ -699,6 +784,81 @@
                         price: 1800000, 
                         balcony: true,
                         features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
+                    },
+                    { 
+                        id: 6, 
+                        number: "SLY-1001-06", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12,
+                        bedsPerRoom: 3,
+                        bedType: "Double",
+                        area: 140, 
+                        floor: "Ground Floor", 
+                        status: "reserved", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
+                    },
+                    { 
+                        id: 7, 
+                        number: "SLY-1001-07", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12,
+                        bedsPerRoom: 3,
+                        bedType: "Double",
+                        area: 140, 
+                        floor: "Ground Floor", 
+                        status: "available", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
+                    },
+                    { 
+                        id: 8, 
+                        number: "SLY-1001-08", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12,
+                        bedsPerRoom: 3,
+                        bedType: "Double",
+                        area: 140, 
+                        floor: "Ground Floor", 
+                        status: "occupied", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
+                    },
+                    { 
+                        id: 9, 
+                        number: "SLY-1001-09", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12,
+                        bedsPerRoom: 3,
+                        bedType: "Double",
+                        area: 140, 
+                        floor: "Ground Floor", 
+                        status: "available", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
+                    },
+                    { 
+                        id: 10, 
+                        number: "SLY-1001-10", 
+                        rooms: 4, 
+                        bathrooms: 2, 
+                        beds: 12,
+                        bedsPerRoom: 3,
+                        bedType: "Double",
+                        area: 140, 
+                        floor: "Ground Floor", 
+                        status: "available", 
+                        price: 1800000, 
+                        balcony: true,
+                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
                     }
                 ]
             }
@@ -720,6 +880,10 @@
         const projectGroupsContainer = document.getElementById('projectGroupsContainer');
         const projectsContainer = document.getElementById('projectsContainer');
         const apartmentsContainer = document.getElementById('apartmentsContainer');
+        const apartmentDetails = document.getElementById('apartmentDetails');
+        const detailsTitle = document.getElementById('detailsTitle');
+        const detailsContent = document.getElementById('detailsContent');
+        const closeDetails = document.getElementById('closeDetails');
 
         // تهيئة التطبيق
         function initializeApp() {
@@ -735,6 +899,9 @@
             document.getElementById('backToCities').addEventListener('click', showCitiesPage);
             document.getElementById('backToProjectGroups').addEventListener('click', showProjectGroupsPage);
             document.getElementById('backToProjects').addEventListener('click', showProjectsPage);
+            closeDetails.addEventListener('click', () => {
+                apartmentDetails.style.display = 'none';
+            });
         }
 
         // تحديث الإحصائيات
@@ -830,6 +997,7 @@
             projectGroupsPage.classList.add('hidden');
             projectsPage.classList.add('hidden');
             apartmentsPage.classList.add('hidden');
+            apartmentDetails.style.display = 'none';
             updateBreadcrumb();
         }
 
@@ -844,6 +1012,7 @@
             projectGroupsPage.classList.remove('hidden');
             projectsPage.classList.add('hidden');
             apartmentsPage.classList.add('hidden');
+            apartmentDetails.style.display = 'none';
             
             renderProjectGroups(city);
             updateBreadcrumb();
@@ -886,6 +1055,7 @@
             projectGroupsPage.classList.add('hidden');
             projectsPage.classList.remove('hidden');
             apartmentsPage.classList.add('hidden');
+            apartmentDetails.style.display = 'none';
             
             renderProjects(group);
             updateBreadcrumb();
@@ -930,6 +1100,7 @@
             
             projectsPage.classList.add('hidden');
             apartmentsPage.classList.remove('hidden');
+            apartmentDetails.style.display = 'none';
             
             renderApartments(project);
             updateBreadcrumb();
@@ -951,16 +1122,15 @@
             
             apartmentsList.forEach(apartment => {
                 const statusText = apartment.status.charAt(0).toUpperCase() + apartment.status.slice(1);
-                const statusClass = `status-${apartment.status}`;
+                const statusColor = apartment.status === 'available' ? '#00a86b' : 
+                                  apartment.status === 'occupied' ? '#ff6b6b' : '#ff9900';
                 
                 const card = document.createElement('div');
                 card.className = 'project-card';
+                card.style.cursor = 'pointer';
                 card.innerHTML = `
                     <div class="project-name">${apartment.number}</div>
-                    <div class="project-location" style="color: ${
-                        apartment.status === 'available' ? '#00a86b' : 
-                        apartment.status === 'occupied' ? '#ff6b6b' : '#ff9900'
-                    }">${statusText}</div>
+                    <div class="project-location" style="color: ${statusColor}">${statusText}</div>
                     <div>
                         <div class="apartments-count">${apartment.rooms} Rooms</div>
                         <div class="bathrooms-count">${apartment.bathrooms} Bathrooms</div>
@@ -968,9 +1138,88 @@
                     <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
                         ${apartment.beds} Beds • ${apartment.area}m²
                     </div>
+                    <div style="margin-top: 10px;">
+                        <button class="view-details-btn" style="background: #2a5298; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
+                            View Details
+                        </button>
+                    </div>
                 `;
+                
+                // إضافة حدث النقر على البطاقة
+                card.addEventListener('click', (e) => {
+                    // منع تنفيذ الحدث إذا تم النقر على الزر
+                    if (!e.target.classList.contains('view-details-btn')) {
+                        showApartmentDetails(apartment);
+                    }
+                });
+                
+                // إضافة حدث النقر على الزر
+                const viewBtn = card.querySelector('.view-details-btn');
+                viewBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // منع تنفيذ حدث النقر على البطاقة
+                    showApartmentDetails(apartment);
+                });
+                
                 apartmentsContainer.appendChild(card);
             });
+        }
+
+        // عرض تفاصيل الشقة
+        function showApartmentDetails(apartment) {
+            detailsTitle.textContent = `Details of ${apartment.number}`;
+            
+            const statusText = apartment.status.charAt(0).toUpperCase() + apartment.status.slice(1);
+            const balconyText = apartment.balcony ? 'Yes' : 'No';
+            
+            detailsContent.innerHTML = `
+                <div class="detail-item">
+                    <div class="detail-label">Apartment Number</div>
+                    <div class="detail-value">${apartment.number}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value">${statusText}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Number of Rooms</div>
+                    <div class="detail-value">${apartment.rooms}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Number of Bathrooms</div>
+                    <div class="detail-value">${apartment.bathrooms}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Number of Beds</div>
+                    <div class="detail-value">${apartment.beds} Beds</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Bed Details</div>
+                    <div class="detail-value">${apartment.rooms} Rooms × ${apartment.bedsPerRoom} ${apartment.bedType} Beds = ${apartment.beds} Beds</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Area</div>
+                    <div class="detail-value">${apartment.area} m²</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Floor</div>
+                    <div class="detail-value">${apartment.floor}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Price</div>
+                    <div class="detail-value">${apartment.price.toLocaleString()} SAR</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Balcony</div>
+                    <div class="detail-value">${balconyText}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Features</div>
+                    <div class="detail-value">${apartment.features.join(', ')}</div>
+                </div>
+            `;
+            
+            apartmentDetails.style.display = 'block';
+            apartmentDetails.scrollIntoView({ behavior: 'smooth' });
         }
 
         // إظهار صفحات التنقل (للأزرار)
