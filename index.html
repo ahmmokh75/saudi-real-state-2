@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1e3c72">
-    <meta name="description" content="Real Estate Management in Saudi Arabia">
     <title>MANZIL PROJECTS - Saudi Real Estate Management</title>
     <style>
-        /* الأساسيات */
         * {
             margin: 0;
             padding: 0;
@@ -19,25 +16,27 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
-            padding: 20px;
+            position: relative;
             min-height: 100vh;
+            padding-bottom: 60px;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
         
-        /* الهيدر */
         header {
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            padding: 30px 20px;
+            padding: 30px 0;
             text-align: center;
             border-radius: 10px;
             margin-bottom: 30px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             position: relative;
+            overflow: hidden;
         }
         
         header::before {
@@ -60,39 +59,61 @@
             opacity: 0.9;
         }
         
-        /* الإحصائيات */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
+        .signature {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            border-left: 4px solid #2a5298;
+            padding: 15px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid rgba(255, 255, 255, 0.2);
         }
         
-        .stat-value {
-            font-size: 2rem;
+        .signature::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00a86b, #ff9900, #ff6b6b);
+        }
+        
+        .signature span {
+            color: #ffd166;
             font-weight: bold;
-            color: #2a5298;
-            margin-bottom: 5px;
+            margin-left: 5px;
         }
         
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
+        .back-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
         }
         
-        /* بطاقات المدن */
+        .back-btn:hover {
+            background: #e0e0e0;
+            transform: translateX(-3px);
+        }
+        
         .cities-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 20px;
             margin-bottom: 40px;
         }
@@ -100,12 +121,17 @@
         .city-card {
             background: white;
             border-radius: 10px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 160px;
             position: relative;
             overflow: hidden;
         }
@@ -149,7 +175,7 @@
         }
         
         .city-name {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             margin-bottom: 15px;
         }
@@ -173,68 +199,20 @@
             padding: 8px 20px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
         
-        /* أزرار الرجوع */
-        .back-btn {
-            background: #f0f0f0;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-            color: #333;
+        .project-groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
-        .back-btn:hover {
-            background: #e0e0e0;
-            transform: translateX(-3px);
-        }
-        
-        /* إخفاء العناصر */
-        .hidden {
-            display: none !important;
-        }
-        
-        /* مسار التنقل */
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            color: #666;
-            flex-wrap: wrap;
-        }
-        
-        .breadcrumb-item {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .breadcrumb-separator {
-            margin: 0 10px;
-            color: #999;
-        }
-        
-        .breadcrumb-current {
-            color: #2a5298;
-            font-weight: bold;
-            cursor: default;
-        }
-        
-        /* بطاقات إضافية */
         .project-group-card {
             background: white;
             border-radius: 10px;
-            padding: 30px 20px;
+            padding: 20px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -276,26 +254,8 @@
             background: #00a86b;
         }
         
-        .jed-group {
-            border-color: #ff6b6b;
-            background: linear-gradient(135deg, #fff0f0, #ffe0e0);
-        }
-        
-        .jed-group::before {
-            background: #ff6b6b;
-        }
-        
-        .dmm-group {
-            border-color: #ffa726;
-            background: linear-gradient(135deg, #fff8e1, #ffecb3);
-        }
-        
-        .dmm-group::before {
-            background: #ffa726;
-        }
-        
         .group-name {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -308,23 +268,56 @@
             color: #00a86b;
         }
         
-        .jed-group .group-name {
-            color: #ff6b6b;
-        }
-        
-        .dmm-group .group-name {
-            color: #ffa726;
-        }
-        
         .group-info {
             color: #666;
             margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .projects-count {
+            display: inline-block;
+            background: #e6f7ee;
+            color: #00a86b;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+        
+        .beds-count {
+            display: inline-block;
+            background: #fff2e5;
+            color: #ff9900;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+        
+        .kitchen-count {
+            display: inline-block;
+            background: #e6f0ff;
+            color: #2a5298;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin: 5px;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
         }
         
         .project-card {
             background: white;
             border-radius: 10px;
-            padding: 25px 20px;
+            padding: 18px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -351,14 +344,14 @@
         }
         
         .project-name {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: bold;
             color: #2a5298;
             margin-bottom: 10px;
         }
         
         .project-location {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #1e3c72;
             margin-bottom: 15px;
             font-weight: bold;
@@ -372,6 +365,7 @@
             border-radius: 20px;
             font-weight: bold;
             margin-right: 8px;
+            font-size: 0.9rem;
         }
         
         .bathrooms-count {
@@ -381,16 +375,91 @@
             padding: 5px 15px;
             border-radius: 20px;
             font-weight: bold;
+            font-size: 0.9rem;
         }
-
-        /* تفاصيل الشقة */
+        
+        .floor-section {
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .floor-title {
+            font-size: 1.5rem;
+            color: #2a5298;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .apartments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .apartment-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .apartment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: #2a5298;
+        }
+        
+        .apartment-number {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .apartment-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .status-available {
+            background-color: #e6f7ee;
+            color: #00a86b;
+        }
+        
+        .status-occupied {
+            background-color: #ffe6e6;
+            color: #ff4d4d;
+        }
+        
+        .status-reserved {
+            background-color: #fff4e6;
+            color: #ff9900;
+        }
+        
         .apartment-details {
             background: white;
             border-radius: 10px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
             display: none;
+            margin-top: 20px;
+            position: relative;
         }
         
         .details-header {
@@ -403,17 +472,17 @@
         }
         
         .details-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: #2a5298;
         }
         
         .close-btn {
             background: #f0f0f0;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -427,13 +496,13 @@
         
         .details-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
         }
         
         .detail-item {
             background: #f9f9f9;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
         }
         
@@ -449,35 +518,340 @@
             color: #333;
         }
         
-        /* تحسينات للجوال */
+        .beds-info {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .search-container {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .filter-select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #2a5298;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2a5298;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2a5298;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 10px;
+            color: #999;
+        }
+        
+        .breadcrumb-current {
+            color: #2a5298;
+            font-weight: bold;
+        }
+        
+        /* أنماط لوحة التحكم */
+        .admin-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid #2a5298;
+        }
+        
+        .admin-title {
+            font-size: 1.5rem;
+            color: #2a5298;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .admin-btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-btn:hover {
+            background: #1e3c72;
+        }
+        
+        .edit-form {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .save-btn {
+            background: #00a86b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .cancel-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .edit-btn {
+            background: #ff9900;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+        
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .auth-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid #2a5298;
+            text-align: center;
+        }
+        
+        .auth-title {
+            font-size: 1.5rem;
+            color: #2a5298;
+            margin-bottom: 15px;
+        }
+        
+        .auth-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        
+        .auth-btn {
+            background: #2a5298;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .auth-btn:hover {
+            background: #1e3c72;
+        }
+        
+        .auth-message {
+            margin-top: 10px;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+        }
+        
+        .add-apartment-btn, .add-floor-btn {
+            background: #00a86b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .floor-management {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .floor-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .floor-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
         @media (max-width: 768px) {
-            .cities-grid {
-                grid-template-columns: 1fr;
+            .cities-grid, .project-groups-grid, .projects-grid, .apartments-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
             
             h1 {
                 font-size: 2rem;
             }
             
-            .city-card {
-                padding: 20px 15px;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .project-group-card,
-            .project-card {
-                padding: 20px 15px;
+            .search-container {
+                flex-direction: column;
             }
             
             .details-content {
                 grid-template-columns: 1fr;
             }
             
-            .apartment-details {
-                padding: 20px;
+            .signature {
+                font-size: 1rem;
+                padding: 12px 0;
+            }
+            
+            .admin-controls {
+                flex-direction: column;
+            }
+            
+            .admin-btn {
+                width: 100%;
             }
         }
     </style>
@@ -489,6 +863,116 @@
             <p class="project-info">Manage all your real estate projects in Saudi cities</p>
         </header>
         
+        <!-- لوحة المصادقة -->
+        <div class="auth-panel" id="authPanel">
+            <h2 class="auth-title">🔐 Authentication Required</h2>
+            <p>Enter password to enable editing features</p>
+            <input type="password" class="auth-input" id="passwordInput" placeholder="Enter password">
+            <button class="auth-btn" id="authBtn">Authenticate</button>
+            <div class="auth-message" id="authMessage"></div>
+        </div>
+        
+        <!-- لوحة التحكم -->
+        <div class="admin-panel hidden" id="adminPanel">
+            <h2 class="admin-title">🔧 Control Panel</h2>
+            <div class="admin-controls">
+                <button class="admin-btn" id="addCity">Add City</button>
+                <button class="admin-btn" id="addGroup">Add Project Group</button>
+                <button class="admin-btn" id="addProject">Add Project</button>
+                <button class="admin-btn" id="saveData">Save Data</button>
+                <button class="admin-btn" id="loadData">Load Data</button>
+                <button class="admin-btn" id="exportData">Export Data</button>
+                <button class="admin-btn" id="importData">Import Data</button>
+            </div>
+            
+            <!-- نموذج إضافة مدينة -->
+            <div class="edit-form" id="cityForm">
+                <h3>Add New City</h3>
+                <div class="form-group">
+                    <label class="form-label">City Name</label>
+                    <input type="text" class="form-input" id="cityNameInput" placeholder="Enter city name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Number of Projects</label>
+                    <input type="number" class="form-input" id="cityProjectsInput" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Color</label>
+                    <select class="form-input" id="cityColorInput">
+                        <option value="riyadh">Blue (Riyadh)</option>
+                        <option value="jeddah">Green (Jeddah)</option>
+                        <option value="dammam">Orange (Dammam)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-input" id="cityDescInput" placeholder="Enter city description" rows="3"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="save-btn" id="saveCity">Save City</button>
+                    <button class="cancel-btn" id="cancelCity">Cancel</button>
+                </div>
+            </div>
+            
+            <!-- نموذج إضافة مجموعة مشاريع -->
+            <div class="edit-form" id="groupForm">
+                <h3>Add New Project Group</h3>
+                <div class="form-group">
+                    <label class="form-label">Group Name</label>
+                    <input type="text" class="form-input" id="groupNameInput" placeholder="Enter group name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" class="form-input" id="groupDescInput" placeholder="Enter group description">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Number of Projects</label>
+                    <input type="number" class="form-input" id="groupProjectsInput" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">City</label>
+                    <select class="form-input" id="groupCityInput">
+                        <option value="">Select City</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="save-btn" id="saveGroup">Save Group</button>
+                    <button class="cancel-btn" id="cancelGroup">Cancel</button>
+                </div>
+            </div>
+
+            <!-- نموذج إضافة مشروع -->
+            <div class="edit-form" id="projectForm">
+                <h3>Add New Project</h3>
+                <div class="form-group">
+                    <label class="form-label">Project Name</label>
+                    <input type="text" class="form-input" id="projectNameInput" placeholder="Enter project name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-input" id="projectLocationInput" placeholder="Enter project location">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Number of Apartments</label>
+                    <input type="number" class="form-input" id="projectApartmentsInput" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Number of Bathrooms</label>
+                    <input type="number" class="form-input" id="projectBathroomsInput" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Group</label>
+                    <select class="form-input" id="projectGroupInput">
+                        <option value="">Select Group</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button class="save-btn" id="saveProject">Save Project</button>
+                    <button class="cancel-btn" id="cancelProject">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
         <!-- Breadcrumb Navigation -->
         <div class="breadcrumb" id="breadcrumb">
             <div class="breadcrumb-item breadcrumb-current">Cities</div>
@@ -498,16 +982,20 @@
         <div id="citiesPage">
             <div class="stats-container">
                 <div class="stat-card">
-                    <div class="stat-value" id="totalCities">3</div>
+                    <div class="stat-value" id="totalCities">0</div>
                     <div class="stat-label">Cities</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="totalProjects">19</div>
+                    <div class="stat-value" id="totalProjects">0</div>
                     <div class="stat-label">Total Projects</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="totalApartments">169</div>
+                    <div class="stat-value" id="totalApartments">0</div>
                     <div class="stat-label">Total Apartments</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalBeds">0</div>
+                    <div class="stat-label">Total Beds</div>
                 </div>
             </div>
             
@@ -524,11 +1012,11 @@
             </button>
             
             <header>
-                <h1 id="cityTitle">Riyadh Projects</h1>
-                <p class="project-info" id="cityDetails">Real estate projects management in Riyadh city</p>
+                <h1 id="cityTitle">City Projects</h1>
+                <p class="project-info" id="cityDetails">Manage real estate projects in the city</p>
             </header>
             
-            <div class="cities-grid" id="projectGroupsContainer">
+            <div class="project-groups-grid" id="projectGroupsContainer">
                 <!-- Project groups will be added here by JavaScript -->
             </div>
         </div>
@@ -540,11 +1028,11 @@
             </button>
             
             <header>
-                <h1 id="groupTitle">SLY Projects</h1>
-                <p class="project-info" id="groupDetails">SLY real estate projects in Riyadh</p>
+                <h1 id="groupTitle">Group Projects</h1>
+                <p class="project-info" id="groupDetails">Real estate projects in the group</p>
             </header>
             
-            <div class="cities-grid" id="projectsContainer">
+            <div class="projects-grid" id="projectsContainer">
                 <!-- Projects will be added here by JavaScript -->
             </div>
         </div>
@@ -556,319 +1044,157 @@
             </button>
             
             <header>
-                <h1 id="projectTitle">Project SLY-1001</h1>
-                <p class="project-info" id="projectDetails">Total Apartments: 10 - Ground Floor Only</p>
+                <h1 id="projectTitle">Project</h1>
+                <p class="project-info" id="projectDetails">Project details</p>
             </header>
             
-            <div class="cities-grid" id="apartmentsContainer">
-                <!-- Apartments will be added here by JavaScript -->
+            <!-- إدارة الأدوار -->
+            <div class="floor-management" id="floorManagement" style="display: none;">
+                <h3>Floor Management</h3>
+                <div class="form-group">
+                    <label class="form-label">Add New Floor</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" class="form-input" id="newFloorName" placeholder="Enter floor name (e.g., Ground Floor, First Floor)">
+                        <button class="add-floor-btn" id="addFloorBtn">Add Floor</button>
+                    </div>
+                </div>
+                <div class="floor-list" id="floorList">
+                    <!-- قائمة الأدوار ستظهر هنا -->
+                </div>
             </div>
-
-            <!-- Apartment Details Section -->
-            <div class="apartment-details" id="apartmentDetails">
-                <div class="details-header">
-                    <h2 class="details-title" id="detailsTitle">Apartment Details</h2>
-                    <button class="close-btn" id="closeDetails">×</button>
-                </div>
-                <div class="details-content" id="detailsContent">
-                    <!-- Details will be added here by JavaScript -->
-                </div>
+            
+            <!-- Floors will be dynamically generated -->
+            <div id="floorsContainer">
+                <!-- Floor sections will be added here by JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Apartment Details -->
+        <div class="apartment-details" id="apartmentDetails">
+            <div class="details-header">
+                <h2 class="details-title" id="detailsTitle">Apartment Details</h2>
+                <button class="close-btn" id="closeDetails">×</button>
+            </div>
+            <div class="details-content" id="detailsContent">
+                <!-- Details will be added here by JavaScript -->
             </div>
         </div>
     </div>
+    
+    <!-- توقيع Ahmed Mokhtar -->
+    <div class="signature">
+        By: <span>Ahmed Mokhtar | Operations Team 2025 © </span>
+    </div>
 
     <script>
-        // البيانات الأساسية
-        const appData = {
-            cities: [
+        // البيانات الأساسية للتطبيق
+        let cities = [
+            {
+                id: 1,
+                name: "Riyadh",
+                totalProjects: 27,
+                color: "riyadh",
+                description: "The capital and largest city of Saudi Arabia"
+            },
+            {
+                id: 2,
+                name: "Jeddah", 
+                totalProjects: 11,
+                color: "jeddah",
+                description: "Major urban center and port on the Red Sea"
+            },
+            {
+                id: 3,
+                name: "Dammam",
+                totalProjects: 4,
+                color: "dammam",
+                description: "Capital of the Eastern Province and important port city"
+            }
+        ];
+
+        let projectGroups = {
+            riyadh: [
                 {
                     id: 1,
-                    name: "Riyadh",
-                    totalProjects: 9,
-                    color: "riyadh",
-                    description: "The capital and largest city of Saudi Arabia"
+                    name: "SLY",
+                    description: "AS SULY PROJECTS",
+                    totalProjects: 5,
+                    totalBeds: 0,
+                    centralKitchen: true,
+                    type: "sly"
                 },
                 {
                     id: 2,
-                    name: "Jeddah", 
-                    totalProjects: 6,
-                    color: "jeddah",
-                    description: "Major urban center and port on the Red Sea"
-                },
-                {
-                    id: 3,
-                    name: "Dammam",
-                    totalProjects: 4,
-                    color: "dammam",
-                    description: "Capital of the Eastern Province and important port city"
+                    name: "UMH", 
+                    description: "UMM AL HAMMAM PROJECTS",
+                    totalProjects: 7,
+                    totalBeds: 0,
+                    centralKitchen: false,
+                    type: "umh"
                 }
             ],
-            projectGroups: {
-                riyadh: [
-                    {
-                        id: 1,
-                        name: "SLY",
-                        description: "SLY Group",
-                        totalProjects: 4,
-                        type: "sly"
-                    },
-                    {
-                        id: 2,
-                        name: "UMH", 
-                        description: "UMH Group",
-                        totalProjects: 5,
-                        type: "umh"
-                    }
-                ],
-                jeddah: [
-                    {
-                        id: 1,
-                        name: "JED",
-                        description: "Jeddah Projects",
-                        totalProjects: 3,
-                        type: "jed"
-                    }
-                ],
-                dammam: [
-                    {
-                        id: 1,
-                        name: "DMM",
-                        description: "Dammam Projects",
-                        totalProjects: 3,
-                        type: "dmm"
-                    }
-                ]
-            },
-            projects: {
-                sly: [
-                    {
-                        id: 1,
-                        name: "SLY-1001",
-                        location: "Riyadh - Al Sulay District",
-                        totalApartments: 10,
-                        totalBathrooms: 18
-                    },
-                    {
-                        id: 2,
-                        name: "SLY-1002", 
-                        location: "Riyadh - Al Sulay District",
-                        totalApartments: 24,
-                        totalBathrooms: 48
-                    },
-                    {
-                        id: 3,
-                        name: "SLY-1003",
-                        location: "Riyadh - Al Sulay District", 
-                        totalApartments: 8,
-                        totalBathrooms: 16
-                    },
-                    {
-                        id: 4,
-                        name: "SLY-1004",
-                        location: "Riyadh - Al Sulay District", 
-                        totalApartments: 16,
-                        totalBathrooms: 32
-                    }
-                ],
-                umh: [
-                    {
-                        id: 1,
-                        name: "UMH-1001",
-                        location: "Riyadh - Umm Al Hamam District",
-                        totalApartments: 12,
-                        totalBathrooms: 24
-                    },
-                    {
-                        id: 2,
-                        name: "UMH-1002", 
-                        location: "Riyadh - Umm Al Hamam District",
-                        totalApartments: 18,
-                        totalBathrooms: 36
-                    },
-                    {
-                        id: 3,
-                        name: "UMH-1003",
-                        location: "Riyadh - Umm Al Hamam District", 
-                        totalApartments: 14,
-                        totalBathrooms: 28
-                    },
-                    {
-                        id: 4,
-                        name: "UMH-1004",
-                        location: "Riyadh - Umm Al Hamam District", 
-                        totalApartments: 20,
-                        totalBathrooms: 40
-                    },
-                    {
-                        id: 5,
-                        name: "UMH-1005",
-                        location: "Riyadh - Umm Al Hamam District", 
-                        totalApartments: 16,
-                        totalBathrooms: 32
-                    }
-                ]
-            },
-            apartments: {
-                'SLY-1001': [
-                    { 
-                        id: 1, 
-                        number: "SLY-1001-01", 
-                        rooms: 2, 
-                        bathrooms: 0, 
-                        beds: 6,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 80, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1000000, 
-                        balcony: false,
-                        features: ["Air Conditioning", "Unfurnished", "Parking"]
-                    },
-                    { 
-                        id: 2, 
-                        number: "SLY-1001-02", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 3, 
-                        number: "SLY-1001-03", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 4, 
-                        number: "SLY-1001-04", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "occupied", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 5, 
-                        number: "SLY-1001-05", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 6, 
-                        number: "SLY-1001-06", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "reserved", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 7, 
-                        number: "SLY-1001-07", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 8, 
-                        number: "SLY-1001-08", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "occupied", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 9, 
-                        number: "SLY-1001-09", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    },
-                    { 
-                        id: 10, 
-                        number: "SLY-1001-10", 
-                        rooms: 4, 
-                        bathrooms: 2, 
-                        beds: 12,
-                        bedsPerRoom: 3,
-                        bedType: "Double",
-                        area: 140, 
-                        floor: "Ground Floor", 
-                        status: "available", 
-                        price: 1800000, 
-                        balcony: true,
-                        features: ["Air Conditioning", "Furnished", "Parking", "Balcony"]
-                    }
-                ]
-            }
+            jeddah: [
+                {
+                    id: 1,
+                    name: "HAM",
+                    description: "Al Hamadaniyyah Projects",
+                    totalProjects: 1,
+                    totalBeds: 0,
+                    centralKitchen: false,
+                    type: "ham"
+                }
+            ],
+            dammam: [
+                {
+                    id: 1,
+                    name: "KJH",
+                    description: "Al Khalidiyyah Al Janubiyyah Projects",
+                    totalProjects: 2,
+                    totalBeds: 0,
+                    centralKitchen: false,
+                    type: "kjh"
+                }
+            ]
         };
 
-        // حالة التطبيق الحالية
-        let currentState = {
-            city: null,
-            group: null,
-            project: null
+        let projects = {
+            sly: [
+                {
+                    id: 1,
+                    name: "SLY-1001",
+                    location: "Riyadh - Al Sulay District",
+                    totalApartments: 35,
+                    totalBathrooms: 68,
+                    totalBeds: 0,
+                    centralKitchen: true,
+                    floors: ["Ground Floor", "First Floor", "Second Floor"],
+                    apartments: []
+                },
+                {
+                    id: 2,
+                    name: "SLY-1002", 
+                    location: "Riyadh - Al Sulay District",
+                    totalApartments: 19,
+                    totalBathrooms: 38,
+                    totalBeds: 0,
+                    centralKitchen: true,
+                    floors: ["Ground Floor", "First Floor", "Second Floor"],
+                    apartments: []
+                }
+            ],
+            umh: [
+                {
+                    id: 3,
+                    name: "UMH-1003",
+                    location: "Riyadh - Umm Al Hamam District", 
+                    totalApartments: 14,
+                    totalBathrooms: 28,
+                    totalBeds: 0,
+                    centralKitchen: false,
+                    floors: ["Ground Floor", "First Floor", "Second Floor"],
+                    apartments: []
+                }
+            ]
         };
 
         // DOM Elements
@@ -879,134 +1205,170 @@
         const citiesContainer = document.getElementById('citiesContainer');
         const projectGroupsContainer = document.getElementById('projectGroupsContainer');
         const projectsContainer = document.getElementById('projectsContainer');
-        const apartmentsContainer = document.getElementById('apartmentsContainer');
+        const floorsContainer = document.getElementById('floorsContainer');
+        const floorManagement = document.getElementById('floorManagement');
+        const floorList = document.getElementById('floorList');
+        const newFloorName = document.getElementById('newFloorName');
+        const addFloorBtn = document.getElementById('addFloorBtn');
+        const backToCities = document.getElementById('backToCities');
+        const backToProjectGroups = document.getElementById('backToProjectGroups');
+        const backToProjects = document.getElementById('backToProjects');
+        const cityTitle = document.getElementById('cityTitle');
+        const cityDetails = document.getElementById('cityDetails');
+        const groupTitle = document.getElementById('groupTitle');
+        const groupDetails = document.getElementById('groupDetails');
+        const projectTitle = document.getElementById('projectTitle');
+        const projectDetails = document.getElementById('projectDetails');
         const apartmentDetails = document.getElementById('apartmentDetails');
         const detailsTitle = document.getElementById('detailsTitle');
         const detailsContent = document.getElementById('detailsContent');
         const closeDetails = document.getElementById('closeDetails');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const totalCities = document.getElementById('totalCities');
+        const totalProjects = document.getElementById('totalProjects');
+        const totalApartments = document.getElementById('totalApartments');
+        const totalBeds = document.getElementById('totalBeds');
 
-        // تهيئة التطبيق
-        function initializeApp() {
-            renderCities();
-            setupEventListeners();
-            updateStats();
+        // عناصر لوحة التحكم والمصادقة
+        const authPanel = document.getElementById('authPanel');
+        const passwordInput = document.getElementById('passwordInput');
+        const authBtn = document.getElementById('authBtn');
+        const authMessage = document.getElementById('authMessage');
+        const adminPanel = document.getElementById('adminPanel');
+        const addCity = document.getElementById('addCity');
+        const addGroup = document.getElementById('addGroup');
+        const addProject = document.getElementById('addProject');
+        const saveData = document.getElementById('saveData');
+        const loadData = document.getElementById('loadData');
+        const cityForm = document.getElementById('cityForm');
+        const groupForm = document.getElementById('groupForm');
+        const projectForm = document.getElementById('projectForm');
+        const saveCity = document.getElementById('saveCity');
+        const cancelCity = document.getElementById('cancelCity');
+        const saveGroup = document.getElementById('saveGroup');
+        const cancelGroup = document.getElementById('cancelGroup');
+        const saveProject = document.getElementById('saveProject');
+        const cancelProject = document.getElementById('cancelProject');
+
+        // Current navigation state
+        let currentCity = null;
+        let currentGroup = null;
+        let currentProject = null;
+        let editMode = false;
+        const PASSWORD = "888";
+
+        // وظائف المصادقة
+        function authenticate() {
+            const password = passwordInput.value;
             
-            console.log('MANZIL PROJECTS System initialized successfully!');
+            if (password === PASSWORD) {
+                editMode = true;
+                authPanel.classList.add('hidden');
+                adminPanel.classList.remove('hidden');
+                authMessage.textContent = '';
+                passwordInput.value = '';
+                
+                // إعادة عرض المحتوى الحالي مع أزرار التعديل
+                if (!citiesPage.classList.contains('hidden')) {
+                    renderCities();
+                } else if (!projectGroupsPage.classList.contains('hidden')) {
+                    renderProjectGroups(currentCity);
+                } else if (!projectsPage.classList.contains('hidden')) {
+                    renderProjects(currentGroup);
+                } else if (!apartmentsPage.classList.contains('hidden')) {
+                    renderApartments(currentProject);
+                }
+                
+                alert('Authentication successful! Editing features are now enabled.');
+            } else {
+                authMessage.textContent = 'Incorrect password. Please try again.';
+                passwordInput.value = '';
+            }
         }
 
-        // إعداد مستمعي الأحداث
-        function setupEventListeners() {
-            document.getElementById('backToCities').addEventListener('click', showCitiesPage);
-            document.getElementById('backToProjectGroups').addEventListener('click', showProjectGroupsPage);
-            document.getElementById('backToProjects').addEventListener('click', showProjectsPage);
-            closeDetails.addEventListener('click', () => {
-                apartmentDetails.style.display = 'none';
-            });
-        }
-
-        // تحديث الإحصائيات
-        function updateStats() {
-            document.getElementById('totalCities').textContent = appData.cities.length;
+        // Initialize statistics
+        function initializeStats() {
+            totalCities.textContent = cities.length;
             
-            let totalProjects = 0;
-            let totalApartments = 0;
+            let totalProjectsCount = 0;
+            let totalApartmentsCount = 0;
+            let totalBedsCount = 0;
             
-            Object.values(appData.projectGroups).forEach(groups => {
-                groups.forEach(group => {
-                    totalProjects += group.totalProjects;
+            // Calculate totals
+            for (const city in projectGroups) {
+                projectGroups[city].forEach(group => {
+                    totalProjectsCount += group.totalProjects;
                 });
-            });
+            }
             
-            Object.values(appData.projects).forEach(projectList => {
-                projectList.forEach(project => {
-                    totalApartments += project.totalApartments;
+            for (const group in projects) {
+                projects[group].forEach(project => {
+                    totalApartmentsCount += project.totalApartments;
+                    totalBedsCount += project.totalBeds;
                 });
-            });
-            
-            document.getElementById('totalProjects').textContent = totalProjects;
-            document.getElementById('totalApartments').textContent = totalApartments;
-        }
-
-        // تحديث مسار التنقل
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            breadcrumb.innerHTML = '';
-            
-            const citiesItem = document.createElement('div');
-            citiesItem.className = 'breadcrumb-item' + (!currentState.city ? ' breadcrumb-current' : '');
-            citiesItem.textContent = 'Cities';
-            citiesItem.addEventListener('click', showCitiesPage);
-            breadcrumb.appendChild(citiesItem);
-            
-            if (currentState.city) {
-                addSeparator(breadcrumb);
-                const cityItem = document.createElement('div');
-                cityItem.className = 'breadcrumb-item' + (!currentState.group ? ' breadcrumb-current' : '');
-                cityItem.textContent = currentState.city.name;
-                cityItem.addEventListener('click', () => showCityProjectGroups(currentState.city));
-                breadcrumb.appendChild(cityItem);
             }
             
-            if (currentState.group) {
-                addSeparator(breadcrumb);
-                const groupItem = document.createElement('div');
-                groupItem.className = 'breadcrumb-item' + (!currentState.project ? ' breadcrumb-current' : '');
-                groupItem.textContent = currentState.group.name;
-                groupItem.addEventListener('click', () => showGroupProjects(currentState.group));
-                breadcrumb.appendChild(groupItem);
-            }
-            
-            if (currentState.project) {
-                addSeparator(breadcrumb);
-                const projectItem = document.createElement('div');
-                projectItem.className = 'breadcrumb-item breadcrumb-current';
-                projectItem.textContent = currentState.project.name;
-                breadcrumb.appendChild(projectItem);
-            }
+            totalProjects.textContent = totalProjectsCount;
+            totalApartments.textContent = totalApartmentsCount;
+            totalBeds.textContent = totalBedsCount;
         }
 
-        function addSeparator(breadcrumb) {
-            const separator = document.createElement('div');
-            separator.className = 'breadcrumb-separator';
-            separator.textContent = '›';
-            breadcrumb.appendChild(separator);
-        }
-
-        // عرض المدن
-        function renderCities() {
-            citiesContainer.innerHTML = '';
-            
-            appData.cities.forEach(city => {
-                const card = document.createElement('div');
-                card.className = `city-card ${city.color}-card`;
-                card.innerHTML = `
-                    <div class="city-name">${city.name}</div>
-                    <div class="projects-count">${city.totalProjects} Projects</div>
-                `;
-                card.addEventListener('click', () => showCityProjectGroups(city));
-                citiesContainer.appendChild(card);
-            });
-            
-            updateBreadcrumb();
-        }
-
-        // عرض صفحة المدن
+        // Show Cities Page
         function showCitiesPage() {
-            currentState = { city: null, group: null, project: null };
+            currentCity = null;
+            currentGroup = null;
+            currentProject = null;
+            
             citiesPage.classList.remove('hidden');
             projectGroupsPage.classList.add('hidden');
             projectsPage.classList.add('hidden');
             apartmentsPage.classList.add('hidden');
             apartmentDetails.style.display = 'none';
+            
             updateBreadcrumb();
+            renderCities();
         }
 
-        // عرض مجموعات مشاريع المدينة
-        function showCityProjectGroups(city) {
-            currentState = { city, group: null, project: null };
+        // Render Cities
+        function renderCities() {
+            citiesContainer.innerHTML = '';
             
-            document.getElementById('cityTitle').textContent = `${city.name} Projects`;
-            document.getElementById('cityDetails').textContent = city.description;
+            cities.forEach(city => {
+                const card = document.createElement('div');
+                card.className = `city-card ${city.color}-card`;
+                card.dataset.id = city.id;
+                
+                card.innerHTML = `
+                    <div class="city-name">${city.name}</div>
+                    <div class="projects-count">${city.totalProjects} projects</div>
+                    <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        ${city.description}
+                    </div>
+                    ${editMode ? `
+                        <div style="margin-top: 15px;">
+                            <button class="edit-btn" onclick="editCity(${city.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteCity(${city.id})">Delete</button>
+                        </div>
+                    ` : ''}
+                `;
+                
+                card.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('edit-btn') && !e.target.classList.contains('delete-btn')) {
+                        showCityProjectGroups(city);
+                    }
+                });
+                citiesContainer.appendChild(card);
+            });
+        }
+
+        // Show City Project Groups
+        function showCityProjectGroups(city) {
+            currentCity = city;
+            currentGroup = null;
+            currentProject = null;
+            
+            cityTitle.textContent = `${city.name} Projects`;
+            cityDetails.textContent = city.description;
             
             citiesPage.classList.add('hidden');
             projectGroupsPage.classList.remove('hidden');
@@ -1015,42 +1377,49 @@
             apartmentDetails.style.display = 'none';
             
             renderProjectGroups(city);
-            updateBreadcrumb();
+            updateBreadcrumb(city);
         }
 
-        // عرض مجموعات المشاريع
+        // Render Project Groups
         function renderProjectGroups(city) {
             projectGroupsContainer.innerHTML = '';
-            const groups = appData.projectGroups[city.color] || [];
+            const cityProjectGroups = projectGroups[city.color] || [];
             
-            if (groups.length === 0) {
-                projectGroupsContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        No project groups available
-                    </div>
-                `;
-                return;
-            }
-            
-            groups.forEach(group => {
+            cityProjectGroups.forEach(group => {
                 const card = document.createElement('div');
                 card.className = `project-group-card ${group.type}-group`;
+                card.dataset.id = group.id;
+                
                 card.innerHTML = `
                     <div class="group-name">${group.name}</div>
                     <div class="group-info">${group.description}</div>
-                    <div class="projects-count">${group.totalProjects} Projects</div>
+                    <div class="projects-count">${group.totalProjects} projects</div>
+                    <div class="beds-count">${group.totalBeds} beds</div>
+                    ${group.centralKitchen ? '<div class="kitchen-count">Central Kitchen</div>' : ''}
+                    ${editMode ? `
+                        <div style="margin-top: 15px;">
+                            <button class="edit-btn" onclick="editGroup('${city.color}', ${group.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteGroup('${city.color}', ${group.id})">Delete</button>
+                        </div>
+                    ` : ''}
                 `;
-                card.addEventListener('click', () => showGroupProjects(group));
+                
+                card.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('edit-btn') && !e.target.classList.contains('delete-btn')) {
+                        showGroupProjects(group, city.name);
+                    }
+                });
                 projectGroupsContainer.appendChild(card);
             });
         }
 
-        // عرض مشاريع المجموعة
-        function showGroupProjects(group) {
-            currentState.group = group;
+        // Show Group Projects
+        function showGroupProjects(group, cityName) {
+            currentGroup = group;
+            currentProject = null;
             
-            document.getElementById('groupTitle').textContent = `${group.name} Projects`;
-            document.getElementById('groupDetails').textContent = `${group.description} in ${currentState.city.name}`;
+            groupTitle.textContent = `${group.name} Projects`;
+            groupDetails.textContent = `${group.description} in ${cityName}`;
             
             projectGroupsPage.classList.add('hidden');
             projectsPage.classList.remove('hidden');
@@ -1058,187 +1427,441 @@
             apartmentDetails.style.display = 'none';
             
             renderProjects(group);
-            updateBreadcrumb();
+            updateBreadcrumb(currentCity, group);
         }
 
-        // عرض المشاريع
+        // Render Projects
         function renderProjects(group) {
             projectsContainer.innerHTML = '';
-            const projectsList = appData.projects[group.type] || [];
+            const groupProjects = projects[group.type] || [];
             
-            if (projectsList.length === 0) {
-                projectsContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        No projects available
-                    </div>
-                `;
-                return;
-            }
-            
-            projectsList.forEach(project => {
+            groupProjects.forEach(project => {
                 const card = document.createElement('div');
                 card.className = 'project-card';
+                card.dataset.id = project.id;
+                
                 card.innerHTML = `
                     <div class="project-name">${project.name}</div>
                     <div class="project-location">${project.location}</div>
                     <div>
-                        <div class="apartments-count">${project.totalApartments} Apartments</div>
-                        <div class="bathrooms-count">${project.totalBathrooms} Bathrooms</div>
+                        <div class="apartments-count">${project.totalApartments} apartments</div>
+                        <div class="bathrooms-count">${project.totalBathrooms} bathrooms</div>
+                        <div class="beds-count">${project.totalBeds} beds</div>
+                        ${project.centralKitchen ? '<div class="kitchen-count">Central Kitchen</div>' : ''}
                     </div>
+                    ${editMode ? `
+                        <div style="margin-top: 15px;">
+                            <button class="edit-btn" onclick="editProject('${group.type}', ${project.id})">Edit</button>
+                            <button class="delete-btn" onclick="deleteProject('${group.type}', ${project.id})">Delete</button>
+                        </div>
+                    ` : ''}
                 `;
-                card.addEventListener('click', () => showProjectApartments(project));
+                
+                card.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('edit-btn') && !e.target.classList.contains('delete-btn')) {
+                        showProjectApartments(project);
+                    }
+                });
                 projectsContainer.appendChild(card);
             });
         }
 
-        // عرض شقق المشروع
+        // Show Project Apartments
         function showProjectApartments(project) {
-            currentState.project = project;
+            currentProject = project;
             
-            document.getElementById('projectTitle').textContent = `Project ${project.name}`;
-            document.getElementById('projectDetails').textContent = `${project.location} - Total Apartments: ${project.totalApartments}`;
+            projectTitle.textContent = `Project ${project.name}`;
+            projectDetails.textContent = `${project.location} - Total Apartments: ${project.totalApartments} - Total Bathrooms: ${project.totalBathrooms}`;
             
             projectsPage.classList.add('hidden');
             apartmentsPage.classList.remove('hidden');
             apartmentDetails.style.display = 'none';
             
+            // إظهار أو إخفاء إدارة الأدوار بناءً على وضع التعديل
+            if (editMode) {
+                floorManagement.style.display = 'block';
+                renderFloorList();
+            } else {
+                floorManagement.style.display = 'none';
+            }
+            
             renderApartments(project);
-            updateBreadcrumb();
+            updateBreadcrumb(currentCity, currentGroup, project);
         }
 
-        // عرض الشقق
-        function renderApartments(project) {
-            apartmentsContainer.innerHTML = '';
-            const apartmentsList = appData.apartments[project.name] || [];
+        // Render Floor List
+        function renderFloorList() {
+            if (!currentProject) return;
             
-            if (apartmentsList.length === 0) {
-                apartmentsContainer.innerHTML = `
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                        No apartments available
+            floorList.innerHTML = '';
+            
+            currentProject.floors.forEach((floor, index) => {
+                const floorItem = document.createElement('div');
+                floorItem.className = 'floor-item';
+                floorItem.innerHTML = `
+                    <span>${floor}</span>
+                    <button class="delete-btn" onclick="deleteFloor(${index})">Delete</button>
+                `;
+                floorList.appendChild(floorItem);
+            });
+        }
+
+        // Add New Floor
+        addFloorBtn.addEventListener('click', function() {
+            if (!currentProject) return;
+            
+            const floorName = newFloorName.value.trim();
+            if (!floorName) {
+                alert('Please enter a floor name');
+                return;
+            }
+            
+            if (currentProject.floors.includes(floorName)) {
+                alert('This floor already exists');
+                return;
+            }
+            
+            currentProject.floors.push(floorName);
+            newFloorName.value = '';
+            
+            renderFloorList();
+            renderApartments(currentProject);
+            saveToLocalStorage();
+            
+            alert(`Floor "${floorName}" added successfully!`);
+        });
+
+        // Delete Floor
+        function deleteFloor(floorIndex) {
+            if (!currentProject) return;
+            
+            if (!confirm('Are you sure you want to delete this floor? All apartments on this floor will be deleted.')) {
+                return;
+            }
+            
+            const floorName = currentProject.floors[floorIndex];
+            
+            // حذف جميع الشقق في هذا الدور
+            currentProject.apartments = currentProject.apartments.filter(apt => apt.floor !== floorName);
+            
+            // حذف الدور
+            currentProject.floors.splice(floorIndex, 1);
+            
+            // تحديث الإحصائيات
+            currentProject.totalApartments = currentProject.apartments.length;
+            currentProject.totalBathrooms = currentProject.apartments.reduce((sum, apt) => sum + apt.bathrooms, 0);
+            currentProject.totalBeds = currentProject.apartments.reduce((sum, apt) => sum + apt.beds, 0);
+            
+            renderFloorList();
+            renderApartments(currentProject);
+            initializeStats();
+            saveToLocalStorage();
+            
+            alert(`Floor "${floorName}" deleted successfully!`);
+        }
+
+        // Render Apartments
+        function renderApartments(project) {
+            floorsContainer.innerHTML = '';
+            
+            if (!project.floors || project.floors.length === 0) {
+                floorsContainer.innerHTML = `
+                    <div class="floor-section">
+                        <h2 class="floor-title">Project Information</h2>
+                        <div style="text-align: center; padding: 40px;">
+                            <div style="font-size: 1.2rem; color: #666; margin-bottom: 20px;">
+                                🏠 No Floors Available
+                            </div>
+                            <div style="color: #999;">
+                                ${editMode ? 'Use the "Add Floor" section to add floors to this project' : 'No floors have been added to this project yet'}
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <div class="apartments-count" style="display: inline-block; margin: 5px;">${project.totalApartments} apartments</div>
+                                <div class="bathrooms-count" style="display: inline-block; margin: 5px;">${project.totalBathrooms} bathrooms</div>
+                                <div class="beds-count" style="display: inline-block; margin: 5px;">${project.totalBeds} beds</div>
+                            </div>
+                        </div>
                     </div>
                 `;
                 return;
             }
             
-            apartmentsList.forEach(apartment => {
-                const statusText = apartment.status.charAt(0).toUpperCase() + apartment.status.slice(1);
-                const statusColor = apartment.status === 'available' ? '#00a86b' : 
-                                  apartment.status === 'occupied' ? '#ff6b6b' : '#ff9900';
+            // إنشاء أقسام لكل دور
+            project.floors.forEach(floor => {
+                const floorApartments = project.apartments.filter(apt => apt.floor === floor);
                 
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.style.cursor = 'pointer';
-                card.innerHTML = `
-                    <div class="project-name">${apartment.number}</div>
-                    <div class="project-location" style="color: ${statusColor}">${statusText}</div>
-                    <div>
-                        <div class="apartments-count">${apartment.rooms} Rooms</div>
-                        <div class="bathrooms-count">${apartment.bathrooms} Bathrooms</div>
-                    </div>
-                    <div style="margin-top: 10px; font-size: 0.9rem; color: #666;">
-                        ${apartment.beds} Beds • ${apartment.area}m²
-                    </div>
-                    <div style="margin-top: 10px;">
-                        <button class="view-details-btn" style="background: #2a5298; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9rem;">
-                            View Details
-                        </button>
+                const floorSection = document.createElement('div');
+                floorSection.className = 'floor-section';
+                
+                floorSection.innerHTML = `
+                    <h2 class="floor-title">
+                        ${floor} - ${floorApartments.length} Apartments
+                        ${editMode ? `<button class="add-apartment-btn" onclick="addNewApartment('${currentGroup.type}', ${project.id}, '${floor}')">+ Add Apartment</button>` : ''}
+                    </h2>
+                    <div class="apartments-grid" id="floor-${floor}">
+                        ${floorApartments.length > 0 ? 
+                            floorApartments.map(apartment => `
+                                <div class="apartment-card" data-id="${apartment.id}">
+                                    <div class="apartment-number">${apartment.number}</div>
+                                    <div class="apartment-status status-${apartment.status}">${apartment.status}</div>
+                                    <div style="margin-top: 10px; font-size: 0.9rem;">
+                                        ${apartment.rooms} Rooms • ${apartment.bathrooms} Bathrooms
+                                    </div>
+                                    <div style="margin-top: 5px; font-size: 0.9rem;">
+                                        ${apartment.beds} Beds • ${apartment.area}
+                                    </div>
+                                    <div style="margin-top: 5px; font-weight: bold; color: #2a5298;">
+                                        ${apartment.price.toLocaleString()} SAR
+                                    </div>
+                                    ${editMode ? `
+                                        <div style="margin-top: 15px;">
+                                            <button class="edit-btn" onclick="editApartment('${currentGroup.type}', ${project.id}, ${apartment.id})">Edit</button>
+                                            <button class="delete-btn" onclick="deleteApartment('${currentGroup.type}', ${project.id}, ${apartment.id})">Delete</button>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `).join('') :
+                            `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
+                                No apartments on this floor
+                            </div>`
+                        }
                     </div>
                 `;
                 
-                // إضافة حدث النقر على البطاقة
-                card.addEventListener('click', (e) => {
-                    // منع تنفيذ الحدث إذا تم النقر على الزر
-                    if (!e.target.classList.contains('view-details-btn')) {
-                        showApartmentDetails(apartment);
-                    }
-                });
-                
-                // إضافة حدث النقر على الزر
-                const viewBtn = card.querySelector('.view-details-btn');
-                viewBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // منع تنفيذ حدث النقر على البطاقة
-                    showApartmentDetails(apartment);
-                });
-                
-                apartmentsContainer.appendChild(card);
+                floorsContainer.appendChild(floorSection);
             });
         }
 
-        // عرض تفاصيل الشقة
-        function showApartmentDetails(apartment) {
-            detailsTitle.textContent = `Details of ${apartment.number}`;
+        // وظائف إدارة الشقق
+        function addNewApartment(groupType, projectId, floor = "Ground Floor") {
+            if (!editMode) {
+                alert('Please authenticate first to add apartments.');
+                return;
+            }
             
-            const statusText = apartment.status.charAt(0).toUpperCase() + apartment.status.slice(1);
-            const balconyText = apartment.balcony ? 'Yes' : 'No';
+            const project = projects[groupType].find(p => p.id === projectId);
+            if (!project) return;
             
-            detailsContent.innerHTML = `
-                <div class="detail-item">
-                    <div class="detail-label">Apartment Number</div>
-                    <div class="detail-value">${apartment.number}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Status</div>
-                    <div class="detail-value">${statusText}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Number of Rooms</div>
-                    <div class="detail-value">${apartment.rooms}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Number of Bathrooms</div>
-                    <div class="detail-value">${apartment.bathrooms}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Number of Beds</div>
-                    <div class="detail-value">${apartment.beds} Beds</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Bed Details</div>
-                    <div class="detail-value">${apartment.rooms} Rooms × ${apartment.bedsPerRoom} ${apartment.bedType} Beds = ${apartment.beds} Beds</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Area</div>
-                    <div class="detail-value">${apartment.area} m²</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Floor</div>
-                    <div class="detail-value">${apartment.floor}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Price</div>
-                    <div class="detail-value">${apartment.price.toLocaleString()} SAR</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Balcony</div>
-                    <div class="detail-value">${balconyText}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Features</div>
-                    <div class="detail-value">${apartment.features.join(', ')}</div>
-                </div>
-            `;
+            // إنشاء شقة جديدة
+            const newApartmentId = project.apartments.length > 0 ? Math.max(...project.apartments.map(a => a.id)) + 1 : 1;
+            const apartmentNumber = `${project.name}-${String(project.apartments.length + 1).padStart(2, '0')}`;
             
-            apartmentDetails.style.display = 'block';
-            apartmentDetails.scrollIntoView({ behavior: 'smooth' });
+            const newApartment = {
+                id: newApartmentId,
+                number: apartmentNumber,
+                rooms: 2,
+                bathrooms: 1,
+                beds: 4,
+                area: "80m²",
+                floor: floor,
+                status: "available",
+                price: 1000000,
+                balcony: false,
+                features: ["Air Conditioning", "Unfurnished", "Parking"]
+            };
+            
+            project.apartments.push(newApartment);
+            project.totalApartments = project.apartments.length;
+            project.totalBathrooms = project.apartments.reduce((sum, apt) => sum + apt.bathrooms, 0);
+            project.totalBeds = project.apartments.reduce((sum, apt) => sum + apt.beds, 0);
+            
+            // تحديث الإحصائيات
+            initializeStats();
+            
+            // إعادة عرض الشقق
+            renderApartments(project);
+            saveToLocalStorage();
+            
+            alert(`Apartment ${apartmentNumber} added successfully!`);
         }
 
-        // إظهار صفحات التنقل (للأزرار)
-        function showProjectGroupsPage() {
-            if (currentState.city) {
-                showCityProjectGroups(currentState.city);
+        function editApartment(groupType, projectId, apartmentId) {
+            if (!editMode) {
+                alert('Please authenticate first to edit apartments.');
+                return;
+            }
+            
+            const project = projects[groupType].find(p => p.id === projectId);
+            if (!project) return;
+            
+            const apartment = project.apartments.find(a => a.id === apartmentId);
+            if (!apartment) return;
+            
+            // في تطبيق حقيقي، هنا نفتح نموذج تعديل
+            const newNumber = prompt("Enter apartment number:", apartment.number);
+            if (newNumber) apartment.number = newNumber;
+            
+            const newRooms = parseInt(prompt("Enter number of rooms:", apartment.rooms));
+            if (!isNaN(newRooms)) apartment.rooms = newRooms;
+            
+            const newBathrooms = parseInt(prompt("Enter number of bathrooms:", apartment.bathrooms));
+            if (!isNaN(newBathrooms)) apartment.bathrooms = newBathrooms;
+            
+            const newBeds = parseInt(prompt("Enter number of beds:", apartment.beds));
+            if (!isNaN(newBeds)) apartment.beds = newBeds;
+            
+            const newArea = prompt("Enter apartment area:", apartment.area);
+            if (newArea) apartment.area = newArea;
+            
+            const newStatus = prompt("Enter apartment status (available, occupied, reserved):", apartment.status);
+            if (newStatus && ['available', 'occupied', 'reserved'].includes(newStatus)) apartment.status = newStatus;
+            
+            const newPrice = parseInt(prompt("Enter apartment price (SAR):", apartment.price));
+            if (!isNaN(newPrice)) apartment.price = newPrice;
+            
+            const newBalcony = confirm("Does the apartment have a balcony?");
+            apartment.balcony = newBalcony;
+            
+            // تحديث إجمالي الحمامات والأسرة في المشروع
+            project.totalBathrooms = project.apartments.reduce((sum, apt) => sum + apt.bathrooms, 0);
+            project.totalBeds = project.apartments.reduce((sum, apt) => sum + apt.beds, 0);
+            
+            // إعادة عرض الشقق
+            renderApartments(project);
+            saveToLocalStorage();
+            
+            alert(`Apartment ${apartment.number} updated successfully!`);
+        }
+
+        function deleteApartment(groupType, projectId, apartmentId) {
+            if (!editMode) {
+                alert('Please authenticate first to delete apartments.');
+                return;
+            }
+            
+            if (!confirm('Are you sure you want to delete this apartment?')) return;
+            
+            const project = projects[groupType].find(p => p.id === projectId);
+            if (!project) return;
+            
+            const apartmentIndex = project.apartments.findIndex(a => a.id === apartmentId);
+            if (apartmentIndex === -1) return;
+            
+            const apartmentNumber = project.apartments[apartmentIndex].number;
+            project.apartments.splice(apartmentIndex, 1);
+            project.totalApartments = project.apartments.length;
+            project.totalBathrooms = project.apartments.reduce((sum, apt) => sum + apt.bathrooms, 0);
+            project.totalBeds = project.apartments.reduce((sum, apt) => sum + apt.beds, 0);
+            
+            // تحديث الإحصائيات
+            initializeStats();
+            
+            // إعادة عرض الشقق
+            renderApartments(project);
+            saveToLocalStorage();
+            
+            alert(`Apartment ${apartmentNumber} deleted successfully!`);
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb(city, group, project) {
+            breadcrumb.innerHTML = '';
+            
+            const citiesItem = document.createElement('div');
+            citiesItem.className = 'breadcrumb-item';
+            citiesItem.textContent = 'Cities';
+            citiesItem.style.cursor = 'pointer';
+            citiesItem.addEventListener('click', showCitiesPage);
+            breadcrumb.appendChild(citiesItem);
+            
+            if (city) {
+                const separator1 = document.createElement('div');
+                separator1.className = 'breadcrumb-separator';
+                separator1.textContent = '›';
+                breadcrumb.appendChild(separator1);
+                
+                const cityItem = document.createElement('div');
+                cityItem.className = 'breadcrumb-item';
+                cityItem.textContent = city.name;
+                cityItem.style.cursor = 'pointer';
+                cityItem.addEventListener('click', () => showCityProjectGroups(city));
+                breadcrumb.appendChild(cityItem);
+            }
+            
+            if (group) {
+                const separator2 = document.createElement('div');
+                separator2.className = 'breadcrumb-separator';
+                separator2.textContent = '›';
+                breadcrumb.appendChild(separator2);
+                
+                const groupItem = document.createElement('div');
+                groupItem.className = 'breadcrumb-item';
+                groupItem.textContent = group.name;
+                groupItem.style.cursor = 'pointer';
+                groupItem.addEventListener('click', () => showGroupProjects(group, city.name));
+                breadcrumb.appendChild(groupItem);
+            }
+            
+            if (project) {
+                const separator3 = document.createElement('div');
+                separator3.className = 'breadcrumb-separator';
+                separator3.textContent = '›';
+                breadcrumb.appendChild(separator3);
+                
+                const projectItem = document.createElement('div');
+                projectItem.className = 'breadcrumb-item breadcrumb-current';
+                projectItem.textContent = project.name;
+                breadcrumb.appendChild(projectItem);
             }
         }
 
-        function showProjectsPage() {
-            if (currentState.city && currentState.group) {
-                showGroupProjects(currentState.group);
-            }
+        // حفظ البيانات في LocalStorage
+        function saveToLocalStorage() {
+            const appData = {
+                cities: cities,
+                projectGroups: projectGroups,
+                projects: projects,
+                lastUpdated: new Date().toISOString()
+            };
+            localStorage.setItem('manzilProjectsData', JSON.stringify(appData));
         }
 
-        // بدء التطبيق
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        // Event Listeners
+        backToCities.addEventListener('click', showCitiesPage);
+        backToProjectGroups.addEventListener('click', () => {
+            if (currentCity) {
+                showCityProjectGroups(currentCity);
+            }
+        });
+        backToProjects.addEventListener('click', () => {
+            if (currentCity && currentGroup) {
+                showGroupProjects(currentGroup, currentCity.name);
+            }
+        });
+        closeDetails.addEventListener('click', () => {
+            apartmentDetails.style.display = 'none';
+        });
 
-        console.log('MANZIL PROJECTS System loaded successfully!');
+        // أحداث المصادقة
+        authBtn.addEventListener('click', authenticate);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                authenticate();
+            }
+        });
+
+        // Initialize
+        initializeStats();
+        showCitiesPage();
+
+        // محاولة تحميل البيانات المحفوظة تلقائياً
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('manzilProjectsData');
+            if (savedData) {
+                try {
+                    const appData = JSON.parse(savedData);
+                    cities = appData.cities || cities;
+                    projectGroups = appData.projectGroups || projectGroups;
+                    projects = appData.projects || projects;
+                    initializeStats();
+                    renderCities();
+                } catch (error) {
+                    console.log('Error loading saved data:', error);
+                }
+            }
+        });
+
+        console.log('MANZIL PROJECTS System initialized successfully!');
     </script>
 </body>
 </html>
